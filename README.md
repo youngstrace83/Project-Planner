@@ -1,4 +1,4 @@
-# Project_Planner
+# Project-Planner
 This planner will create a schedule to help users plan their work.
 
 ## How it works
