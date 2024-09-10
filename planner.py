@@ -1,4 +1,6 @@
 import csv
+import tkinter
+from tkinter.filedialog import askopenfilename
 from collections import namedtuple
 
 Task = namedtuple("Task", ["title", "duration", "prerequisites"])
@@ -31,3 +33,34 @@ def order_tasks(tasks):
                 completed.add(task_number)
                 break
     return start_days
+
+def draw_chart(tasks, canvas, row_height=40, title_width=300, \
+               line_height=40, day_width=20, bar_height=20, \
+                title_indent=20, font_size=-16):
+    height = canvas["height"]
+    width = canvas["width"]
+    week_width = 5 * day_width
+    canvas.create_line(0, row_height, width, line_height, \
+                       fill="gray")
+    for week_number in range(5):
+        x = title_width + week_number* week_width
+        canvas.create_line(x, 0, x, height, fill="gray")
+        canvas.create_text(x + week_width / 2, row_height / 2, \
+                          text=f"Week {week_number+1}", \
+                            font=("Helvetica", font_size, "bold"))
+
+def open_project():
+    filename = askopenfilename(title="Open Project", initialdir=".", \
+                               filetypes=[("CSV Document", "*.csv")])
+    tasks = read_tasks(filename)
+    draw_chart(tasks, canvas)
+
+root = tkinter.Tk()
+root.title("Project Planner")
+open_button = tkinter.Button(root, text="Open Project...", \
+                             command=open_project)
+open_button.pack(side="top")
+canvas = tkinter.Canvas(root, width=800, \
+                        height=400, bg="white")
+canvas.pack(side="bottom")
+tkinter.mainloop()
