@@ -72,10 +72,11 @@ def open_project():
 
 root = tkinter.Tk()
 root.title("Project Planner")
-open_button = tkinter.Button(root, text="Open Project...", \
-                             command=open_project)
-open_button.pack(side="top")
-canvas = tkinter.Canvas(root, width=800, \
-                        height=400, bg="white")
+root.resizable(width=False, height=False)
+button_frame = tkinter.Frame(root, padx=5, pady=5)
+button_frame.pack(side="top", fill="x")
+open_button = tkinter.Button(button_frame, text="Open Project...", command=open_project)
+open_button.pack(side="left")
+canvas = tkinter.Canvas(root, width=800, height=400, bg="white")
 canvas.pack(side="bottom")
 tkinter.mainloop()
