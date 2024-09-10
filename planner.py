@@ -48,6 +48,21 @@ def draw_chart(tasks, canvas, row_height=40, title_width=300, \
         canvas.create_text(x + week_width / 2, row_height / 2, \
                           text=f"Week {week_number+1}", \
                             font=("Helvetica", font_size, "bold"))
+        start_days = order_tasks(tasks)
+        y = row_height
+        for task_number in start_days:
+            task = tasks[task_number]
+            canvas.create_text(title_indent, y + row_height / 2, \
+                                text=task.title, anchor=tkinter.W, \
+                                font=("Helvetica", font_size))
+            bar_x = title_width + start_days[task_number] \
+                    * day_width
+            bar_y = y + (row_height - bar_height) / 2
+            bar_width = task.duration * day_width
+            canvas.create_rectangle(bar_x, bar_y, bar_x + \
+                                    bar_width, bar_y + \
+                                    bar_height, fill="red")
+            y += row_height
 
 def open_project():
     filename = askopenfilename(title="Open Project", initialdir=".", \
